@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Idris ❤️</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;overflow-x:hidden;font-family:Arial,Helvetica,sans-serif;color:#fff;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 20% 20%,#7c3aed55,transparent 30%),radial-gradient(circle at 80% 30%,#06b6d455,transparent 30%),radial-gradient(circle at 50% 90%,#ec489955,transparent 35%),#050816}
+body:before{content:"";position:fixed;width:500px;height:500px;background:#7c3aed;filter:blur(180px);opacity:.18;border-radius:50%;top:-200px;left:-150px;animation:moveGlow 8s infinite alternate ease-in-out}
+body:after{content:"";position:fixed;width:500px;height:500px;background:#06b6d4;filter:blur(180px);opacity:.15;border-radius:50%;bottom:-250px;right:-150px;animation:moveGlow2 10s infinite alternate ease-in-out}
+@keyframes moveGlow{to{transform:translate(180px,120px)}}@keyframes moveGlow2{to{transform:translate(-180px,-100px)}}
+.particles{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;width:5px;height:5px;background:#fff;border-radius:50%;opacity:.5;box-shadow:0 0 15px #fff;animation:floatParticle linear infinite}
+@keyframes floatParticle{from{transform:translateY(110vh) scale(.5);opacity:0}20%{opacity:.8}80%{opacity:.6}to{transform:translateY(-10vh) scale(1.2);opacity:0}}
+.container{width:92%;max-width:650px;position:relative;z-index:5;text-align:center}
+#opening{animation:openingAppear 1.2s ease}
+@keyframes openingAppear{from{opacity:0;transform:translateY(40px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+.small-label{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:#67e8f9;margin-bottom:18px;text-shadow:0 0 20px #06b6d4}
+.main-title{font-size:clamp(38px,9vw,70px);font-weight:900;line-height:1;margin-bottom:20px;background:linear-gradient(90deg,#fff,#67e8f9,#a78bfa,#f0abfc,#fff);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientText 4s linear infinite;filter:drop-shadow(0 0 20px #7c3aed66)}
+@keyframes gradientText{to{background-position:300% center}}
+.subtitle{color:#cbd5e1;font-size:16px;margin-bottom:35px}
+.click-button{position:relative;padding:18px 42px;border:1px solid rgba(255,255,255,.3);border-radius:100px;color:#fff;font-size:17px;font-weight:bold;letter-spacing:1px;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);background-size:200% 200%;box-shadow:0 0 20px #7c3aed99,0 0 50px #2563eb55;transition:.35s;animation:buttonGradient 4s ease infinite}
+@keyframes buttonGradient{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.click-button:before{content:"";position:absolute;inset:-5px;border-radius:inherit;border:1px solid #67e8f9;opacity:.5;animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.15);opacity:0}}
+.click-button:hover{transform:scale(1.08);box-shadow:0 0 30px #7c3aed,0 0 80px #06b6d488}.click-button:active{transform:scale(.95)}
+#content{display:none;animation:contentAppear 1.3s cubic-bezier(.2,.8,.2,1)}
+@keyframes contentAppear{from{opacity:0;transform:translateY(70px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+.message-card{position:relative;padding:35px 25px;border-radius:28px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 25px 80px rgba(0,0,0,.4),inset 0 0 30px rgba(255,255,255,.03);overflow:hidden;margin-bottom:25px}
+.message-card:before{content:"";position:absolute;width:250px;height:250px;background:#7c3aed;filter:blur(100px);opacity:.18;top:-150px;right:-100px}
+.message-card:after{content:"";position:absolute;width:200px;height:200px;background:#06b6d4;filter:blur(100px);opacity:.15;bottom:-120px;left:-80px}
+.message-card h1{position:relative;z-index:2;font-size:34px;margin-bottom:20px;background:linear-gradient(90deg,#67e8f9,#c084fc,#f9a8d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.message-card p{position:relative;z-index:2;font-size:17px;line-height:1.9;color:#e2e8f0}
+.image-wrapper{position:relative;padding:6px;border-radius:25px;background:linear-gradient(135deg,#06b6d4,#7c3aed,#ec4899,#06b6d4);background-size:300% 300%;animation:borderAnimation 5s linear infinite;box-shadow:0 0 30px #7c3aed55,0 20px 60px rgba(0,0,0,.5)}
+@keyframes borderAnimation{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+.image-wrapper img{display:block;width:100%;height:auto;border-radius:19px;object-fit:contain;background:#080b18;animation:imageAppear 1.5s .3s both}
+@keyframes imageAppear{from{opacity:0;transform:scale(.8);filter:blur(10px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+.footer{margin-top:20px;font-size:13px;color:#94a3b8;letter-spacing:1px}.heart{color:#f472b6;display:inline-block;animation:heartbeat 1.3s infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+@media(max-width:500px){.container{width:90%}.message-card{padding:28px 20px}.message-card h1{font-size:28px}.message-card p{font-size:15px}.click-button{padding:16px 30px}}
+@keyframes fadeOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.8)}}
+</style>
+</head>
+<body>
+<div class="particles">
+<div class="particle" style="left:5%;animation-duration:8s"></div>
+<div class="particle" style="left:12%;animation-duration:11s;animation-delay:2s"></div>
+<div class="particle" style="left:20%;animation-duration:7s;animation-delay:1s"></div>
+<div class="particle" style="left:30%;animation-duration:13s;animation-delay:4s"></div>
+<div class="particle" style="left:40%;animation-duration:9s;animation-delay:3s"></div>
+<div class="particle" style="left:50%;animation-duration:12s;animation-delay:1s"></div>
+<div class="particle" style="left:60%;animation-duration:8s;animation-delay:5s"></div>
+<div class="particle" style="left:70%;animation-duration:14s;animation-delay:2s"></div>
+<div class="particle" style="left:80%;animation-duration:10s;animation-delay:4s"></div>
+<div class="particle" style="left:90%;animation-duration:7s;animation-delay:1s"></div>
+</div>
+
+<div class="container">
+<div id="opening">
+<div class="small-label">✦ Special Message ✦</div>
+<div class="main-title">Idris</div>
+<div class="subtitle">Ada sesuatu yang ingin disampaikan kepadamu...</div>
+<button class="click-button" onclick="openMessage()">✨ KLIK DI SINI IDRIS ✨</button>
+</div>
+
+<div id="content">
+<div class="message-card">
+<h1>Hai Idris ❤️</h1>
+<p>
+Ada sedikit pesan khusus untuk kamu.
+<br><br>
+TERUNTUK SODRA AWAK
+<br><br>
+KALAU TIDAK SIBUK JAM SEGINI
+<br><br>
+AYO KITA KELUAR MEROKOK MWHEHEHE
+<br><br>
+</p>
+</div>
+
+<div class="image-wrapper">
+<img src="https://c.files.bbci.co.uk/5241/production/_100375012_rokok91.jpg" alt="Foto untuk Idris">
+</div>
+
+<div class="footer">Made with anasta <span class="heart">♥</span> especially for Idris</div>
+</div>
+</div>
+
+<script>
+function openMessage(){
+const opening=document.getElementById("opening");
+opening.style.animation="fadeOut .6s ease forwards";
+setTimeout(function(){
+opening.style.display="none";
+document.getElementById("content").style.display="block";
+},500);
+}
+</script>
+</body>
+</html>
