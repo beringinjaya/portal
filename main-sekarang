@@ -1,0 +1,2543 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#061a3a" />
+  <title>BluePlay — Video Profile</title>
+
+  <style>
+    :root{
+      --bg:#020817;
+      --bg2:#061a3a;
+      --card:#08285a;
+      --card2:#0b3675;
+      --blue:#18a8ff;
+      --blue2:#006cff;
+      --cyan:#51e8ff;
+      --text:#f5fbff;
+      --muted:#91a9c8;
+      --line:rgba(108,190,255,.20);
+      --shadow:0 18px 55px rgba(0,70,180,.30);
+    }
+
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent
+    }
+
+    html{
+      scroll-behavior:smooth
+    }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(0,132,255,.22), transparent 30%),
+        radial-gradient(circle at 100% 35%, rgba(0,229,255,.13), transparent 27%),
+        linear-gradient(180deg,#020817 0%,#03142e 45%,#020817 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit
+    }
+
+    button{
+      font:inherit
+    }
+
+    .app{
+      width:min(100%, 520px);
+      min-height:100vh;
+      margin:auto;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg,rgba(5,28,65,.76),rgba(2,8,23,.97)),
+        radial-gradient(circle at 50% 20%,rgba(24,168,255,.10),transparent 35%);
+      box-shadow:0 0 80px rgba(0,119,255,.12);
+    }
+
+    /* ================= TOP BAR ================= */
+
+    .topbar{
+      position:fixed;
+      z-index:50;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(100%,520px);
+      height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:8px 14px;
+      background:linear-gradient(
+        180deg,
+        rgba(2,12,31,.92),
+        rgba(2,12,31,.45),
+        transparent
+      );
+      backdrop-filter:blur(10px);
+    }
+
+    .brand-dot{
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:14px;
+      background:linear-gradient(135deg,var(--cyan),var(--blue2));
+      box-shadow:0 0 25px rgba(24,168,255,.45);
+    }
+
+    .top-actions{
+      display:flex;
+      gap:8px
+    }
+
+    .icon-btn{
+      width:38px;
+      height:38px;
+      border:1px solid rgba(145,215,255,.22);
+      border-radius:12px;
+      background:rgba(4,25,57,.62);
+      color:white;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      backdrop-filter:blur(10px);
+    }
+
+    /* ================= COVER ================= */
+
+    .cover{
+      margin-top:0;
+      aspect-ratio:16/9;
+      position:relative;
+      overflow:hidden;
+      background:#031936;
+    }
+
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.04) 45%,
+          rgba(1,8,22,.82) 100%
+        );
+      pointer-events:none;
+    }
+
+    .cover-title{
+      position:absolute;
+      z-index:2;
+      left:16px;
+      right:16px;
+      bottom:13px;
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.7px;
+      text-shadow:0 2px 14px #000;
+    }
+
+    /* ================= PROFILE ================= */
+
+    .profile{
+      padding:0 16px 12px;
+      position:relative;
+    }
+
+    .avatar{
+      width:88px;
+      height:88px;
+      border-radius:50%;
+      border:4px solid #061a3a;
+      position:relative;
+      margin-top:-44px;
+      object-fit:cover;
+      background:linear-gradient(135deg,#0fd8ff,#0756ff);
+      box-shadow:
+        0 8px 28px rgba(0,0,0,.4),
+        0 0 0 1px rgba(110,210,255,.28);
+      z-index:4;
+    }
+
+    .online{
+      position:absolute;
+      left:80px;
+      top:30px;
+      width:15px;
+      height:15px;
+      border-radius:50%;
+      background:#24ff8a;
+      border:3px solid #061a3a;
+      box-shadow:0 0 15px #24ff8a;
+    }
+
+    .name-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-top:8px
+    }
+
+    .name{
+      font-size:21px;
+      font-weight:900;
+      letter-spacing:.2px
+    }
+
+    .verified{
+      width:19px;
+      height:19px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#36ddff,#0074ff);
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .username{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px
+    }
+
+    .stats{
+      display:flex;
+      gap:17px;
+      font-size:12px;
+      font-weight:800;
+      margin:12px 0
+    }
+
+    .stats span{
+      color:#dceeff
+    }
+
+    .stats small{
+      color:var(--muted);
+      font-weight:600
+    }
+
+    /* ================= LONG MENU ================= */
+
+    .long-menu{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:54px;
+      border:1px solid rgba(83,201,255,.30);
+      border-radius:17px;
+      background:
+        linear-gradient(
+          100deg,
+          rgba(0,92,255,.25),
+          rgba(0,214,255,.13)
+        ),
+        rgba(3,25,58,.75);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      animation:floatPulse 2.8s ease-in-out infinite;
+    }
+
+    .long-menu::before{
+      content:"";
+      position:absolute;
+      inset:-100% 30%;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.18),
+        transparent
+      );
+      transform:rotate(20deg);
+      animation:shine 3.5s linear infinite;
+    }
+
+    .long-menu .content{
+      position:relative;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      z-index:1
+    }
+
+    .gif-badge{
+      width:34px;
+      height:34px;
+      border-radius:11px;
+      display:grid;
+      place-items:center;
+      font-size:11px;
+      font-weight:1000;
+      background:linear-gradient(135deg,#3ce9ff,#0068ff);
+      box-shadow:0 0 22px rgba(38,196,255,.48);
+    }
+
+    .long-text strong{
+      display:block;
+      font-size:14px
+    }
+
+    .long-text span{
+      display:block;
+      font-size:10px;
+      color:#a9d8ff;
+      margin-top:2px
+    }
+
+    /* ================= AUTH ================= */
+
+    .auth-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:12px 0 18px
+    }
+
+    .auth{
+      height:43px;
+      border-radius:13px;
+      border:1px solid var(--line);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:13px;
+      position:relative;
+      overflow:hidden;
+      transition:.2s transform,.2s box-shadow;
+    }
+
+    .auth:hover{
+      transform:translateY(-2px)
+    }
+
+    .auth.login{
+      background:linear-gradient(135deg,#008cff,#0051ff);
+      box-shadow:0 8px 28px rgba(0,103,255,.35)
+    }
+
+    .auth.register{
+      background:rgba(11,53,108,.8);
+      box-shadow:0 8px 28px rgba(0,103,255,.16)
+    }
+
+    .auth::after{
+      content:"";
+      position:absolute;
+      top:-40%;
+      left:-70%;
+      width:45%;
+      height:180%;
+      transform:skewX(-20deg);
+      background:rgba(255,255,255,.20);
+      animation:buttonShine 4.4s ease-in-out infinite;
+    }
+
+    /* ================= TABS ================= */
+
+    .tabs{
+      display:flex;
+      gap:28px;
+      border-bottom:1px solid rgba(110,180,255,.12);
+      padding:0 16px;
+    }
+
+    .tab{
+      padding:12px 0 11px;
+      font-size:13px;
+      font-weight:900;
+      color:#7894b7;
+      position:relative
+    }
+
+    .tab.active{
+      color:#fff
+    }
+
+    .tab.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:3px;
+      border-radius:5px;
+      background:linear-gradient(90deg,#00d5ff,#0068ff);
+      box-shadow:0 0 12px rgba(0,181,255,.7);
+    }
+
+    /* ================= VIDEO GRID ================= */
+
+    .feed{
+      padding:12px 10px 100px
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px
+    }
+
+    .video-card{
+      min-width:0;
+      position:relative;
+      border-radius:14px;
+      overflow:hidden;
+      background:linear-gradient(180deg,#0a3b7d,#061f48);
+      border:1px solid rgba(85,188,255,.20);
+      box-shadow:0 8px 25px rgba(0,0,0,.28);
+      animation:cardIn .65s both;
+    }
+
+    .video-card:nth-child(2){
+      animation-delay:.08s
+    }
+
+    .video-card:nth-child(3){
+      animation-delay:.16s
+    }
+
+    /* ================= VIDEO WRAP ================= */
+
+    .video-wrap{
+      position:relative;
+      aspect-ratio:1/1;
+      overflow:hidden;
+      background:#03142f;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#03142f;
+    }
+
+    .video-wrap::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.02),
+          rgba(0,0,0,.28)
+        );
+      pointer-events:none;
+      z-index:2;
+    }
+
+    /* ================= PLAY BUTTON TRANSPARAN ================= */
+
+    .play-btn{
+      position:absolute;
+      z-index:8;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:64px;
+      height:64px;
+      border:0;
+      border-radius:50%;
+      background:transparent;
+      color:white;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:none;
+      transition:
+        opacity .25s ease,
+        transform .25s ease;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+    }
+
+    .play-btn:hover{
+      transform:translate(-50%,-50%) scale(1.12)
+    }
+
+    .play-btn.hidden{
+      opacity:0;
+      pointer-events:none
+    }
+
+    .play-icon{
+      width:0;
+      height:0;
+      border-top:12px solid transparent;
+      border-bottom:12px solid transparent;
+      border-left:18px solid rgba(255,255,255,.95);
+      margin-left:5px;
+      filter:drop-shadow(0 2px 5px rgba(0,0,0,.75));
+    }
+
+    /* ================= ANIMASI SAAT PLAY ================= */
+
+    .video-card.playing{
+      transform:translateY(-2px);
+      border-color:rgba(55,202,255,.55);
+      box-shadow:
+        0 12px 35px rgba(0,108,255,.28),
+        0 0 0 1px rgba(44,190,255,.10);
+    }
+
+    .video-card.playing .video-wrap{
+      animation:videoFocus .35s ease-out;
+    }
+
+    .video-card.playing::before{
+      content:"";
+      position:absolute;
+      z-index:7;
+      inset:0;
+      border-radius:14px;
+      pointer-events:none;
+      border:1px solid rgba(71,213,255,.35);
+      animation:focusGlow .8s ease-out;
+    }
+
+    /* Animasi pause */
+
+    .video-card.paused .play-btn{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    /* Ikon pause ketika video berjalan */
+    .pause-indicator{
+      position:absolute;
+      z-index:9;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%) scale(.75);
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(0,0,0,.35);
+      backdrop-filter:blur(3px);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .pause-indicator.show{
+      animation:pausePop .65s ease-out;
+    }
+
+    .pause-bars{
+      display:flex;
+      gap:5px;
+    }
+
+    .pause-bars span{
+      width:5px;
+      height:19px;
+      border-radius:3px;
+      background:white;
+    }
+
+    /* ================= GAME TAG ================= */
+
+    .game-tag{
+      position:absolute;
+      z-index:10;
+      left:7px;
+      top:7px;
+      max-width:calc(100% - 14px);
+      padding:5px 7px;
+      border-radius:8px;
+      background:rgba(0,19,50,.75);
+      border:1px solid rgba(105,211,255,.32);
+      font-size:8px;
+      font-weight:1000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      backdrop-filter:blur(7px);
+      pointer-events:none;
+    }
+
+    /* ================= VIEWS ================= */
+
+    .views{
+      position:absolute;
+      z-index:10;
+      right:7px;
+      bottom:7px;
+      display:flex;
+      align-items:center;
+      gap:4px;
+      padding:4px 6px;
+      border-radius:8px;
+      background:rgba(0,0,0,.58);
+      font-size:8px;
+      font-weight:800;
+      pointer-events:none;
+    }
+
+    .live-dot{
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:#35ff9b;
+      box-shadow:0 0 8px #35ff9b;
+    }
+
+    /* ================= VIDEO CONTROLS ================= */
+
+    .video-controls{
+      position:absolute;
+      z-index:20;
+      left:6px;
+      right:6px;
+      bottom:6px;
+      padding:6px 7px;
+      border-radius:11px;
+      background:rgba(0,8,22,.78);
+      backdrop-filter:blur(9px);
+      -webkit-backdrop-filter:blur(9px);
+      opacity:0;
+      transform:translateY(8px);
+      transition:
+        opacity .2s ease,
+        transform .2s ease;
+      pointer-events:none;
+    }
+
+    .video-wrap:hover .video-controls,
+    .video-wrap.controls-visible .video-controls{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+
+    .progress-wrap{
+      width:100%;
+      height:12px;
+      display:flex;
+      align-items:center;
+      cursor:pointer;
+      margin-bottom:3px;
+    }
+
+    .progress{
+      width:100%;
+      height:4px;
+      border-radius:10px;
+      appearance:none;
+      -webkit-appearance:none;
+      background:rgba(255,255,255,.25);
+      cursor:pointer;
+      outline:none;
+    }
+
+    .progress::-webkit-slider-thumb{
+      appearance:none;
+      -webkit-appearance:none;
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:#fff;
+      cursor:pointer;
+      box-shadow:0 0 8px rgba(30,190,255,.9);
+    }
+
+    .progress::-moz-range-thumb{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      border:0;
+      background:#fff;
+      cursor:pointer;
+    }
+
+    .control-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:5px;
+    }
+
+    .control-left,
+    .control-right{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .control-btn{
+      min-width:27px;
+      height:27px;
+      padding:0 5px;
+      border:0;
+      border-radius:7px;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:10px;
+      font-weight:900;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:.18s;
+    }
+
+    .control-btn:hover{
+      background:rgba(255,255,255,.18);
+    }
+
+    .time-display{
+      font-size:8px;
+      font-weight:800;
+      color:#d9efff;
+      white-space:nowrap;
+      padding:0 3px;
+    }
+
+    .speed-select{
+      height:27px;
+      border:0;
+      border-radius:7px;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:9px;
+      font-weight:900;
+      outline:none;
+      cursor:pointer;
+      padding:0 4px;
+    }
+
+    .speed-select option{
+      color:#111;
+      background:#fff;
+    }
+
+    /* ================= PLAY AREA ================= */
+
+    .play-area{
+      padding:7px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4,38,83,.95),
+          rgba(3,21,49,.98)
+        );
+    }
+
+    .play-link{
+      width:100%;
+      min-height:30px;
+      border:0;
+      border-radius:9px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      font-size:10px;
+      font-weight:1000;
+      letter-spacing:.3px;
+      background:linear-gradient(135deg,#00b8ff,#0062ff);
+      box-shadow:0 5px 18px rgba(0,108,255,.30);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .play-link::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      transform:translateX(-120%);
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.24),
+        transparent
+      );
+      animation:playShine 3.7s infinite;
+    }
+
+    /* ================= BOTTOM NAV ================= */
+
+    .bottom-nav{
+      position:fixed;
+      z-index:40;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(100%,520px);
+      height:61px;
+      padding:
+        0
+        max(3px,env(safe-area-inset-left))
+        max(2px,env(safe-area-inset-bottom));
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(7,39,69,.98),
+          rgba(3,22,43,.99)
+        );
+      border-top:1px solid rgba(111,203,255,.28);
+      box-shadow:0 -7px 24px rgba(0,0,0,.30);
+      backdrop-filter:blur(18px);
+    }
+
+    .nav-item{
+      position:relative;
+      color:#e8f5ff;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:3px;
+      font-size:8px;
+      font-weight:1000;
+      border-right:1px solid rgba(2,15,29,.75);
+      border-left:1px solid rgba(103,191,237,.08);
+      transition:.2s;
+      text-shadow:0 1px 3px rgba(0,0,0,.7);
+      overflow:hidden;
+    }
+
+    .nav-item::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(37,157,220,.13),
+          rgba(0,0,0,0)
+        );
+      opacity:0;
+      transition:.2s;
+    }
+
+    .nav-item:hover::before,
+    .nav-item.active::before{
+      opacity:1
+    }
+
+    .nav-item .nav-icon{
+      position:relative;
+      z-index:1;
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      font-size:18px;
+      line-height:1;
+      color:#fff;
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,.7));
+    }
+
+    .nav-item span:last-child{
+      position:relative;
+      z-index:1
+    }
+
+    .nav-item.active{
+      color:#fff;
+      background:rgba(12,105,158,.16)
+    }
+
+    .nav-item.active .nav-icon{
+      filter:drop-shadow(0 0 7px rgba(46,194,255,.75));
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast{
+      position:fixed;
+      z-index:100;
+      left:50%;
+      bottom:84px;
+      transform:translate(-50%,18px);
+      width:min(calc(100% - 30px),390px);
+      padding:13px 15px;
+      border-radius:14px;
+      background:rgba(2,18,42,.95);
+      border:1px solid rgba(73,191,255,.32);
+      box-shadow:0 18px 50px rgba(0,0,0,.4);
+      font-size:12px;
+      font-weight:800;
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0)
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal{
+      position:fixed;
+      z-index:90;
+      inset:0;
+      display:grid;
+      place-items:end center;
+      padding:18px;
+      background:rgba(0,6,18,.62);
+      backdrop-filter:blur(7px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .modal.show{
+      opacity:1;
+      pointer-events:auto
+    }
+
+    .modal-box{
+      width:min(100%,470px);
+      border-radius:24px 24px 16px 16px;
+      padding:20px;
+      background:linear-gradient(180deg,#082d63,#031630);
+      border:1px solid rgba(85,200,255,.28);
+      box-shadow:0 25px 80px rgba(0,0,0,.55);
+      transform:translateY(25px) scale(.97);
+      transition:.3s;
+    }
+
+    .modal.show .modal-box{
+      transform:translateY(0) scale(1)
+    }
+
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px
+    }
+
+    .modal-title{
+      font-size:18px;
+      font-weight:1000
+    }
+
+    .close{
+      background:none;
+      border:0;
+      color:#9bb8da;
+      font-size:24px;
+      cursor:pointer
+    }
+
+    .modal-box p{
+      font-size:12px;
+      color:#a9c2df;
+      line-height:1.6
+    }
+
+    .modal-btn{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:44px;
+      border-radius:13px;
+      margin-top:10px;
+      font-size:13px;
+      font-weight:1000;
+      background:linear-gradient(135deg,#00bfff,#0063ff);
+    }
+
+    /* ================= ANIMATIONS ================= */
+
+    @keyframes shine{
+      0%{
+        transform:translateX(-170%) rotate(20deg)
+      }
+      100%{
+        transform:translateX(370%) rotate(20deg)
+      }
+    }
+
+    @keyframes buttonShine{
+      0%,55%{
+        left:-70%
+      }
+      80%,100%{
+        left:140%
+      }
+    }
+
+    @keyframes playShine{
+      0%,50%{
+        transform:translateX(-120%)
+      }
+      80%,100%{
+        transform:translateX(120%)
+      }
+    }
+
+    @keyframes floatPulse{
+      0%,100%{
+        transform:translateY(0)
+      }
+      50%{
+        transform:translateY(-2px)
+      }
+    }
+
+    @keyframes cardIn{
+      from{
+        opacity:0;
+        transform:translateY(14px) scale(.97)
+      }
+      to{
+        opacity:1;
+        transform:none
+      }
+    }
+
+    @keyframes videoFocus{
+      0%{
+        transform:scale(1)
+      }
+      45%{
+        transform:scale(1.025)
+      }
+      100%{
+        transform:scale(1)
+      }
+    }
+
+    @keyframes focusGlow{
+      0%{
+        opacity:0;
+        transform:scale(.96)
+      }
+      35%{
+        opacity:1
+      }
+      100%{
+        opacity:0;
+        transform:scale(1)
+      }
+    }
+
+    @keyframes pausePop{
+      0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.65)
+      }
+      25%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1)
+      }
+      100%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(1.12)
+      }
+    }
+
+    /* ================= DESKTOP ================= */
+
+    @media (min-width:700px){
+
+      body{
+        padding:20px 0
+      }
+
+      .app{
+        border-radius:28px;
+        min-height:calc(100vh - 40px);
+        overflow:hidden
+      }
+
+      .topbar,
+      .bottom-nav{
+        width:min(100%,520px)
+      }
+
+      .topbar{
+        top:20px;
+        border-radius:28px 28px 0 0
+      }
+
+      .bottom-nav{
+        bottom:20px;
+        border-radius:0 0 28px 28px
+      }
+    }
+
+    /* ================= MOBILE VIDEO CONTROLS ================= */
+
+    @media (max-width:699px){
+
+      .video-controls{
+        bottom:5px;
+        left:5px;
+        right:5px;
+      }
+
+      .control-btn{
+        min-width:25px;
+        height:25px;
+      }
+
+      .speed-select{
+        height:25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app" id="home">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+      <div class="brand-dot">
+        BP
+      </div>
+
+      <div class="top-actions">
+
+        <button
+          class="icon-btn"
+          id="shareBtn"
+          aria-label="Bagikan"
+        >
+          ↗
+        </button>
+
+        <button
+          class="icon-btn"
+          id="moreBtn"
+          aria-label="Menu"
+        >
+          ⋮
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- COVER -->
+    <section class="cover">
+
+      <img
+        id="coverImage"
+        alt="Sampul profil"
+      />
+
+      <div
+        class="cover-title"
+        id="coverTitle"
+      ></div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+    <section class="profile">
+
+      <img
+        class="avatar"
+        id="profileImage"
+        alt="Foto profil"
+      />
+
+      <span
+        class="online"
+        title="Online"
+      ></span>
+
+
+      <div class="name-row">
+
+        <div
+          class="name"
+          id="profileName"
+        ></div>
+
+        <div class="verified">
+          ✓
+        </div>
+
+      </div>
+
+
+      <div
+        class="username"
+        id="profileUsername"
+      ></div>
+
+
+      <div class="stats">
+
+        <span>
+          <b>1</b>
+          <small>pengikut</small>
+        </span>
+
+        <span>
+          <b>0</b>
+          <small>mengikuti</small>
+        </span>
+
+      </div>
+
+
+      <!-- MENU GIF -->
+      <a
+        class="long-menu"
+        id="longMenu"
+        target="_blank"
+        rel="noopener"
+      >
+
+        <div class="content">
+
+          <div class="gif-badge">
+            GIF
+          </div>
+
+          <div class="long-text">
+
+            <strong id="longTitle">
+              MENU GIF PANJANG
+            </strong>
+
+            <span>
+              Klik untuk membuka halaman utama
+            </span>
+
+          </div>
+
+          <b>›</b>
+
+        </div>
+
+      </a>
+
+
+      <!-- LOGIN REGISTER -->
+      <div class="auth-row">
+
+        <a
+          class="auth register"
+          id="registerBtn"
+          target="_blank"
+          rel="noopener"
+        >
+          DAFTAR
+        </a>
+
+        <a
+          class="auth login"
+          id="loginBtn"
+          target="_blank"
+          rel="noopener"
+        >
+          LOGIN
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- TABS -->
+    <div class="tabs">
+
+      <div class="tab active">
+        DIBUAT
+      </div>
+
+      <div class="tab">
+        LIVE
+      </div>
+
+    </div>
+
+
+    <!-- VIDEO FEED -->
+    <section class="feed">
+
+      <div
+        class="video-grid"
+        id="videoGrid"
+      ></div>
+
+    </section>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <a
+      class="nav-item active"
+      id="navHome"
+      href="#home"
+    >
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        ⌂
+      </span>
+
+      <span>
+        BERANDA
+      </span>
+    </a>
+
+
+    <a
+      class="nav-item"
+      id="navPromosi"
+      target="_blank"
+      rel="noopener"
+    >
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        ▰
+      </span>
+
+      <span>
+        PROMOSI
+      </span>
+    </a>
+
+
+    <a
+      class="nav-item"
+      id="navEvent"
+      target="_blank"
+      rel="noopener"
+    >
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        🏆
+      </span>
+
+      <span>
+        EVENT
+      </span>
+    </a>
+
+
+    <a
+      class="nav-item"
+      id="navTelegram"
+      target="_blank"
+      rel="noopener"
+    >
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        ➤
+      </span>
+
+      <span>
+        TELEGRAM
+      </span>
+    </a>
+
+
+    <a
+      class="nav-item"
+      id="navLivechat"
+    >
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        ▰
+      </span>
+
+      <span>
+        LIVECHAT
+      </span>
+    </a>
+
+  </nav>
+
+
+  <!-- TOAST -->
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <!-- MODAL -->
+  <div
+    class="modal"
+    id="modal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-head">
+
+        <div
+          class="modal-title"
+          id="modalTitle"
+        >
+          LIVECHAT
+        </div>
+
+        <button
+          class="close"
+          id="closeModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <p id="modalText">
+        Selamat datang. Silakan pilih menu untuk melanjutkan.
+      </p>
+
+
+      <a
+        class="modal-btn"
+        id="modalAction"
+        target="_blank"
+        rel="noopener"
+      >
+        BUKA SEKARANG
+      </a>
+
+    </div>
+
+  </div>
+
+
+<script>
+
+/* =========================================================
+   PENGATURAN UTAMA
+   ========================================================= */
+
+const CONFIG = {
+
+  profile: {
+
+    name: "SLOT GACOR",
+
+    username: "@benihtoto_gacor",
+
+    coverTitle: "VIDEO TERBARU • BLUEPLAY",
+
+    coverImage:
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1920&q=90",
+
+    profileImage:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=500&q=90"
+
+  },
+
+
+  links: {
+
+    menuPanjang:
+      "https://example.com",
+
+    daftar:
+      "https://example.com/daftar",
+
+    login:
+      "https://example.com/login",
+
+    promosi:
+      "https://example.com/promosi",
+
+    event:
+      "https://example.com/event",
+
+    telegram:
+      "https://t.me/",
+
+    livechat:
+      "https://example.com/livechat"
+
+  },
+
+
+  /* =======================================================
+     VIDEO
+     
+     POSTER SUDAH DIHAPUS
+     ======================================================= */
+
+  videos: [
+
+    {
+
+      game: "GAME 01 • POLA TERBARU",
+
+      video:
+        "https://www.image2url.com/r2/default/videos/1786694627950-68a2f532-638d-4209-9506-c330718ec062.mp4",
+
+      playUrl:
+        "https://example.com/game-01",
+
+      startViews: 1284
+
+    },
+
+
+    {
+
+      game: "GAME 02 • PREDIKSI",
+
+      video:
+        "https://www.image2url.com/r2/default/videos/1786694627950-68a2f532-638d-4209-9506-c330718ec062.mp4",
+
+      playUrl:
+        "https://example.com/game-02",
+
+      startViews: 863
+
+    },
+
+
+    {
+
+      game: "GAME 03 • SCATTER",
+
+      video:
+        "https://www.image2url.com/r2/default/videos/1786694627950-68a2f532-638d-4209-9506-c330718ec062.mp4",
+
+      playUrl:
+        "https://capital4.benihtotopro.one/",
+
+      startViews: 2147
+
+    }
+
+  ]
+
+};
+
+
+/* =========================================================
+   SISTEM HALAMAN
+   ========================================================= */
+
+const $ = (id) =>
+  document.getElementById(id);
+
+
+/* PROFILE */
+
+$("coverImage").src =
+  CONFIG.profile.coverImage;
+
+$("profileImage").src =
+  CONFIG.profile.profileImage;
+
+$("profileName").textContent =
+  CONFIG.profile.name;
+
+$("profileUsername").textContent =
+  CONFIG.profile.username;
+
+$("coverTitle").textContent =
+  CONFIG.profile.coverTitle;
+
+
+/* LINKS */
+
+$("longMenu").href =
+  CONFIG.links.menuPanjang;
+
+$("registerBtn").href =
+  CONFIG.links.daftar;
+
+$("loginBtn").href =
+  CONFIG.links.login;
+
+$("navPromosi").href =
+  CONFIG.links.promosi;
+
+$("navEvent").href =
+  CONFIG.links.event;
+
+$("navTelegram").href =
+  CONFIG.links.telegram;
+
+
+/* VIDEO */
+
+const grid =
+  $("videoGrid");
+
+const videoElements =
+  [];
+
+const videoCards =
+  [];
+
+
+/* FORMAT VIEW */
+
+function formatViews(n){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      notation:"compact",
+      maximumFractionDigits:1
+    }
+  ).format(n);
+
+}
+
+
+/* FORMAT DURASI */
+
+function formatTime(seconds){
+
+  if(!Number.isFinite(seconds))
+    return "0:00";
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const secs =
+    Math.floor(seconds % 60)
+      .toString()
+      .padStart(2,"0");
+
+  return `${minutes}:${secs}`;
+
+}
+
+
+/* =========================================================
+   MATIKAN SEMUA VIDEO LAIN
+   ========================================================= */
+
+function pauseOtherVideos(currentIndex){
+
+  videoElements.forEach(
+    (other,index) => {
+
+      if(index !== currentIndex){
+
+        other.pause();
+
+        const card =
+          videoCards[index];
+
+        const btn =
+          card.querySelector(".play-btn");
+
+        card.classList.remove("playing");
+
+        card.classList.add("paused");
+
+        btn.classList.remove("hidden");
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   BUAT VIDEO
+   ========================================================= */
+
+CONFIG.videos.forEach(
+  (item,index) => {
+
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "video-card";
+
+
+    card.innerHTML = `
+
+      <div class="video-wrap">
+
+        <video
+          preload="metadata"
+          playsinline
+          webkit-playsinline
+          src="${item.video}"
+        ></video>
+
+
+        <!-- PLAY TRANSPARAN -->
+
+        <button
+          class="play-btn"
+          type="button"
+          aria-label="Putar ${item.game}"
+        >
+
+          <span class="play-icon"></span>
+
+        </button>
+
+
+        <!-- PAUSE INDICATOR -->
+
+        <div class="pause-indicator">
+
+          <div class="pause-bars">
+
+            <span></span>
+            <span></span>
+
+          </div>
+
+        </div>
+
+
+        <!-- GAME -->
+
+        <div class="game-tag">
+          ${item.game}
+        </div>
+
+
+        <!-- VIEWS -->
+
+        <div class="views">
+
+          <span class="live-dot"></span>
+
+          <span class="view-number">
+            ${formatViews(item.startViews)}
+          </span>
+
+        </div>
+
+
+        <!-- VIDEO CONTROLS -->
+
+        <div class="video-controls">
+
+          <div class="progress-wrap">
+
+            <input
+              class="progress"
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+              step="0.1"
+              aria-label="Progress video"
+            />
+
+          </div>
+
+
+          <div class="control-row">
+
+            <div class="control-left">
+
+              <button
+                class="control-btn mini-play"
+                type="button"
+                aria-label="Play atau pause"
+              >
+                ▶
+              </button>
+
+
+              <span class="time-display">
+                0:00 / 0:00
+              </span>
+
+            </div>
+
+
+            <div class="control-right">
+
+              <select
+                class="speed-select"
+                aria-label="Kecepatan video"
+              >
+
+                <option value="0.5">
+                  0.5x
+                </option>
+
+                <option value="0.75">
+                  0.75x
+                </option>
+
+                <option
+                  value="1"
+                  selected
+                >
+                  1x
+                </option>
+
+                <option value="1.25">
+                  1.25x
+                </option>
+
+                <option value="1.5">
+                  1.5x
+                </option>
+
+                <option value="2">
+                  2x
+                </option>
+
+              </select>
+
+
+              <button
+                class="control-btn mute-btn"
+                type="button"
+                aria-label="Mute"
+              >
+                🔊
+              </button>
+
+
+              <button
+                class="control-btn fullscreen-btn"
+                type="button"
+                aria-label="Fullscreen"
+              >
+                ⛶
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BUTTON MAINKAN -->
+
+      <div class="play-area">
+
+        <a
+          class="play-link"
+          href="${item.playUrl}"
+          target="_blank"
+          rel="noopener"
+        >
+          ▶ MAINKAN
+        </a>
+
+      </div>
+
+    `;
+
+
+    grid.appendChild(card);
+
+
+    /* ELEMENT VIDEO */
+
+    const video =
+      card.querySelector("video");
+
+    const playBtn =
+      card.querySelector(".play-btn");
+
+    const miniPlay =
+      card.querySelector(".mini-play");
+
+    const progress =
+      card.querySelector(".progress");
+
+    const timeDisplay =
+      card.querySelector(".time-display");
+
+    const speedSelect =
+      card.querySelector(".speed-select");
+
+    const muteBtn =
+      card.querySelector(".mute-btn");
+
+    const fullscreenBtn =
+      card.querySelector(".fullscreen-btn");
+
+    const pauseIndicator =
+      card.querySelector(".pause-indicator");
+
+    const videoWrap =
+      card.querySelector(".video-wrap");
+
+    const viewNumber =
+      card.querySelector(".view-number");
+
+
+    videoElements.push(video);
+
+    videoCards.push(card);
+
+
+    let views =
+      item.startViews;
+
+    let hasCountedView =
+      false;
+
+
+    /* =====================================================
+       PLAY BUTTON
+       ===================================================== */
+
+    async function playVideo(){
+
+      pauseOtherVideos(index);
+
+
+      try{
+
+        await video.play();
+
+        card.classList.add("playing");
+
+        card.classList.remove("paused");
+
+        playBtn.classList.add("hidden");
+
+        miniPlay.textContent =
+          "❚❚";
+
+
+        if(!hasCountedView){
+
+          views++;
+
+          viewNumber.textContent =
+            formatViews(views);
+
+          hasCountedView =
+            true;
+
+        }
+
+      }catch(err){
+
+        showToast(
+          "Video belum bisa diputar. Pastikan link MP4 dapat diakses."
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       PAUSE VIDEO
+       ===================================================== */
+
+    function pauseVideo(){
+
+      video.pause();
+
+      card.classList.remove("playing");
+
+      card.classList.add("paused");
+
+      playBtn.classList.remove("hidden");
+
+      miniPlay.textContent =
+        "▶";
+
+    }
+
+
+    /* =====================================================
+       PLAY BUTTON UTAMA
+       ===================================================== */
+
+    playBtn.addEventListener(
+      "click",
+      async (e) => {
+
+        e.stopPropagation();
+
+        if(video.paused){
+
+          await playVideo();
+
+        }else{
+
+          pauseVideo();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       KLIK VIDEO = PLAY / PAUSE
+       ===================================================== */
+
+    video.addEventListener(
+      "click",
+      async () => {
+
+        if(video.paused){
+
+          await playVideo();
+
+        }else{
+
+          pauseVideo();
+
+          pauseIndicator.classList.remove("show");
+
+          void pauseIndicator.offsetWidth;
+
+          pauseIndicator.classList.add("show");
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       MINI PLAY / PAUSE
+       ===================================================== */
+
+    miniPlay.addEventListener(
+      "click",
+      async (e) => {
+
+        e.stopPropagation();
+
+        if(video.paused){
+
+          await playVideo();
+
+        }else{
+
+          pauseVideo();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       VIDEO PLAY EVENT
+       ===================================================== */
+
+    video.addEventListener(
+      "play",
+      () => {
+
+        pauseOtherVideos(index);
+
+        card.classList.add("playing");
+
+        card.classList.remove("paused");
+
+        playBtn.classList.add("hidden");
+
+        miniPlay.textContent =
+          "❚❚";
+
+      }
+    );
+
+
+    /* =====================================================
+       VIDEO PAUSE EVENT
+       ===================================================== */
+
+    video.addEventListener(
+      "pause",
+      () => {
+
+        card.classList.remove("playing");
+
+        card.classList.add("paused");
+
+        playBtn.classList.remove("hidden");
+
+        miniPlay.textContent =
+          "▶";
+
+      }
+    );
+
+
+    /* =====================================================
+       VIDEO SELESAI
+       ===================================================== */
+
+    video.addEventListener(
+      "ended",
+      () => {
+
+        card.classList.remove("playing");
+
+        card.classList.add("paused");
+
+        playBtn.classList.remove("hidden");
+
+        miniPlay.textContent =
+          "▶";
+
+        progress.value =
+          0;
+
+      }
+    );
+
+
+    /* =====================================================
+       DURASI VIDEO
+       ===================================================== */
+
+    video.addEventListener(
+      "loadedmetadata",
+      () => {
+
+        timeDisplay.textContent =
+          `0:00 / ${formatTime(video.duration)}`;
+
+      }
+    );
+
+
+    /* =====================================================
+       UPDATE PROGRESS
+       ===================================================== */
+
+    video.addEventListener(
+      "timeupdate",
+      () => {
+
+        if(video.duration){
+
+          const percent =
+            (video.currentTime / video.duration) * 100;
+
+          progress.value =
+            percent;
+
+        }
+
+        timeDisplay.textContent =
+          `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+
+      }
+    );
+
+
+    /* =====================================================
+       SEEK / LONCAT DURASI
+       ===================================================== */
+
+    progress.addEventListener(
+      "input",
+      () => {
+
+        if(video.duration){
+
+          video.currentTime =
+            (progress.value / 100) *
+            video.duration;
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       SPEED CONTROL
+       ===================================================== */
+
+    speedSelect.addEventListener(
+      "change",
+      () => {
+
+        video.playbackRate =
+          parseFloat(speedSelect.value);
+
+        showToast(
+          `Kecepatan video ${speedSelect.value}x`
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       MUTE
+       ===================================================== */
+
+    muteBtn.addEventListener(
+      "click",
+      (e) => {
+
+        e.stopPropagation();
+
+        video.muted =
+          !video.muted;
+
+        muteBtn.textContent =
+          video.muted
+            ? "🔇"
+            : "🔊";
+
+      }
+    );
+
+
+    /* =====================================================
+       FULLSCREEN
+       ===================================================== */
+
+    fullscreenBtn.addEventListener(
+      "click",
+      async (e) => {
+
+        e.stopPropagation();
+
+        try{
+
+          if(document.fullscreenElement){
+
+            await document.exitFullscreen();
+
+          }else if(videoWrap.requestFullscreen){
+
+            await videoWrap.requestFullscreen();
+
+          }else if(video.webkitEnterFullscreen){
+
+            video.webkitEnterFullscreen();
+
+          }
+
+        }catch(err){
+
+          showToast(
+            "Fullscreen tidak tersedia di browser ini."
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       TAP VIDEO UNTUK MEMUNCULKAN CONTROLS
+       ===================================================== */
+
+    videoWrap.addEventListener(
+      "click",
+      (e) => {
+
+        if(
+          e.target.closest(".video-controls") ||
+          e.target.closest(".play-btn")
+        ){
+
+          return;
+
+        }
+
+        videoWrap.classList.add(
+          "controls-visible"
+        );
+
+        clearTimeout(
+          videoWrap.controlsTimer
+        );
+
+        videoWrap.controlsTimer =
+          setTimeout(
+            () => {
+
+              videoWrap.classList.remove(
+                "controls-visible"
+              );
+
+            },
+            3000
+          );
+
+      }
+    );
+
+
+    /* =====================================================
+       AUTO HIDE CONTROLS
+       ===================================================== */
+
+    video.addEventListener(
+      "play",
+      () => {
+
+        videoWrap.classList.add(
+          "controls-visible"
+        );
+
+        clearTimeout(
+          videoWrap.controlsTimer
+        );
+
+        videoWrap.controlsTimer =
+          setTimeout(
+            () => {
+
+              videoWrap.classList.remove(
+                "controls-visible"
+              );
+
+            },
+            3000
+          );
+
+      }
+    );
+
+
+  }
+);
+
+
+/* =========================================================
+   LIVECHAT
+   ========================================================= */
+
+$("navLivechat").addEventListener(
+  "click",
+  (e) => {
+
+    e.preventDefault();
+
+    $("modalTitle").textContent =
+      "LIVECHAT";
+
+    $("modalText").textContent =
+      "Klik tombol di bawah untuk membuka Livechat. Link dapat Anda ganti di CONFIG.links.livechat.";
+
+    $("modalAction").href =
+      CONFIG.links.livechat;
+
+    $("modal").classList.add(
+      "show"
+    );
+
+  }
+);
+
+
+$("closeModal").addEventListener(
+  "click",
+  () =>
+    $("modal").classList.remove(
+      "show"
+    )
+);
+
+
+$("modal").addEventListener(
+  "click",
+  (e) => {
+
+    if(e.target === $("modal")){
+
+      $("modal").classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SHARE
+   ========================================================= */
+
+$("shareBtn").addEventListener(
+  "click",
+  async () => {
+
+    try{
+
+      if(navigator.share){
+
+        await navigator.share({
+
+          title:
+            CONFIG.profile.name,
+
+          text:
+            "Lihat profil dan video terbaru.",
+
+          url:
+            location.href
+
+        });
+
+      }else{
+
+        await navigator.clipboard.writeText(
+          location.href
+        );
+
+        showToast(
+          "Link halaman berhasil disalin."
+        );
+
+      }
+
+    }catch(e){}
+
+  }
+);
+
+
+/* =========================================================
+   MENU TITIK TIGA
+   ========================================================= */
+
+$("moreBtn").addEventListener(
+  "click",
+  () => {
+
+    showToast(
+      "Semua menu link dapat Anda ubah di bagian CONFIG pada file HTML."
+    );
+
+  }
+);
+
+
+/* =========================================================
+   ANIMASI ANGKA PENONTON ONLINE
+   ========================================================= */
+
+let online =
+  7;
+
+
+setInterval(
+  () => {
+
+    online +=
+      Math.random() > .5
+        ? 1
+        : -1;
+
+    online =
+      Math.max(
+        3,
+        Math.min(
+          18,
+          online
+        )
+      );
+
+    document.title =
+      `${online} orang sedang melihat • ${CONFIG.profile.name}`;
+
+  },
+  4200
+);
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(text){
+
+  const toast =
+    $("toast");
+
+  toast.textContent =
+    text;
+
+  toast.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    window.toastTimer
+  );
+
+  window.toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      2600
+    );
+
+}
+
+</script>
+
+</body>
+</html>
+```
